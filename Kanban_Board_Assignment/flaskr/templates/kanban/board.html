@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kanban Board</title>
+	<link rel="stylesheet" type="text/css" href="../../static/masterstyling.css">
+</head>
+<body class="page-back">
+    <header class="navbar">
+		<h1>{{g.user['username']}}'s Kanban Board</h1>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('kanban.index')}}">Home</a></li>
+                {% if g.user %}
+                    <li><a href="{{ url_for('kanban.board') }}">Kanban Board</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% endif %}
+			</ul>
+		</nav>
+	</header>
+	<!-- <h1>Kanban Board</h1> -->
+  <br>
+	<div id="board">
+		<div class="sticky-note">
+			<h2 class="task-headings">To Do</h2>
+            {% for post in posts %}
+            {% if post['category'] == 'todo' %}
+              <article class="tasks">
+                <header>
+                  <div>
+                    <h1>{{ post['title'] }}</h1>
+                  </div>
+                </header>
+                <p class="body">{{ post['description'] }}<br> due by: {{ post['due_date'] }}</p>
+                <form action="{{ url_for('kanban.delete', id=post['id']) }}" method="post">
+                  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+                </form>
+                <form action="{{ url_for('kanban.update', id=post['id'], category='inprogress')}}" method="post">
+                  <button class="arrow-right" type="submit">&#8641</button>
+                </form>
+              </article>
+            {% if not loop.last %}  
+              <hr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+			<!-- <ul class="tasks"></ul> -->
+		</div>
+
+		<div class="sticky-note">
+            <h2 class="task-headings">In Progress</h2>
+            {% for post in posts %}
+                {% if post['category'] == 'inprogress' %}
+                  <article class="tasks">
+                    <header>
+                      <div>
+                        <h1>{{ post['title'] }}</h1>
+                      </div>
+                    </header>
+                    <p class="body">{{ post['description'] }}<br> due by: {{ post['due_date'] }}</p>
+                    <form action="{{ url_for('kanban.delete', id=post['id']) }}" method="post">
+                      <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+                    </form>
+                    <div class="arrows">
+                      <form action="{{ url_for('kanban.update', id=post['id'], category='todo')}}" method="post">
+                        <button class="arrow-button" type="submit">&#8637</button>
+                      </form>
+                      <form action="{{ url_for('kanban.update', id=post['id'], category='done')}}" method="post">
+                        <button class="arrow-button" type="submit">&#8641</button>
+                      </form>
+                    </div>
+                    <!-- <p>&#8637</p>
+                  <p>&#8641</p> -->
+                  </article>
+            {% if not loop.last %}
+                <hr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            <!-- <ul class="tasks"></ul> -->
+		</div>
+
+		<div class="sticky-note">
+            <h2 class="task-headings">Done</h2>
+            {% for post in posts %}
+                {% if post['category'] == 'done' %}
+                  <article class="tasks">
+                    <header>
+                      <div>
+                        <h1>{{ post['title'] }}</h1>
+                      </div>
+                    </header>
+                    <p class="body">{{ post['description'] }}<br> due by: {{ post['due_date'] }}</p>
+                    <form action="{{ url_for('kanban.delete', id=post['id']) }}" method="post">
+                      <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+                    </form>
+                    <form action="{{ url_for('kanban.update', id=post['id'], category='inprogress')}}" method="post">
+                      <button class="arrow-left" type="submit">&#8637</button>
+                    </form>
+                
+                    <!-- <p>&#8637</p> -->
+                  </article>
+            {% if not loop.last %}
+                <hr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            <!-- <ul class="tasks"></ul> -->
+		</div>
+      <div class="add-task-section">
+        <h2 class="task-headings-add-task">Add Tasks</h2>
+        <div class="add-task-box">
+            <!-- <ul class="tasks"></ul> -->
+            <div class="add-task">
+                <form method="post">
+                    <div class="task-details">
+                      <input type="text" id="title" class="add-task-input" name="title" placeholder="Task Title" required>
+                      <select class="add-task-input" name="category" id="category" required>
+                          <option value="todo">To Do</option>
+                          <option value="inprogress">In Progress</option>
+                          <option value="done">Done</option>
+                      </select>
+                      <input type="date" id="time" class="add-task-input" name="time" placeholder="Task Due Date" required>
+                      <button type="submit" class="add-task-button">Add Task</button>
+                    </div>
+                    <textarea class="add-task-description" id="description" class="add-task-input" name="description" placeholder="Task Description"></textarea>
+                </form>
+            </div>
+        </div>     
+      </div>   
+	</div>
+
+	<script src="kanban.js"></script>
+</body>
+</html>

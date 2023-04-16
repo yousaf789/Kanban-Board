@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kanban Board - Code Kaboodle</title>
+    <link rel="stylesheet" type="text/css" href="../../static/masterstyling.css">
+</head>
+<body class="page-back">
+	<header class="navbar">
+		<h1>Code Kaboodle</h1>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('kanban.index')}}">Home</a></li>
+                {% if g.user %}
+                    <li><a href="{{ url_for('kanban.board') }}">Kanban Board</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% endif %}
+			</ul>
+		</nav>
+	</header>
+	<main class="introduction">
+		<section>
+			<h2>Tired of forgetting what you were supposed to do?<br>
+                Cant be bothered to write it down?<br> 
+                Don't worry we got you.
+            </h2>
+			<p>So somehow you ended up on this website huh, well your in for a treat. Welcome to an online Kanban Board where we're serious 
+                about getting things done...but not too serious, 
+                because life is too short to be bored by boring boards. That's why we're here to introduce you to the most fun-tastic 
+                and productive tool in project management history: the Kanban board! Think of it as a colorful, interactive playground for 
+                your tasks, where you can slide to success, swing into action, and see your progress at a glance. So, grab your hard hat,
+                 put on your thinking cap, and let's get ready to board the Kanban train to success-ville!</p>
+		</section>
+		<section>
+			<form>
+				<label for="email">What??!! You haven't signed up? What are you waiting for ? Do it now it's just a click away.</label>
+				<a class="btn btn-primary" href="{{ url_for('auth.register')}}">Click Me</a>
+			</form>
+		</section>
+	</main>
+	<footer>	
+		<p>&copy; 2023 Code Kaboodle</p>
+	</footer>
+</body>
+</html>
