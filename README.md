@@ -12,7 +12,7 @@ A simple and efficient Kanban board application designed to streamline project m
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/kanban-board.git
+git clone https://github.com/yousaf789/kanban-board.git
 ```
 2. Create and activate a virtual environment
 
