@@ -26,6 +26,12 @@ venv\Scripts\activate # For MacOS, use: source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+4. Initialize the database
+
+```bash
+flask init-db
+```
+
 ## Usage
 1. Run the Flask application
 
